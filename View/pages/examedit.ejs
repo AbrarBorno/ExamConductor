@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <title>Editing | <%= name %></title>
+
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/simplepicker.css" />
+
+    <meta name="theme-color" content="#7952b3" />
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      body {
+        min-height: 75rem;
+        padding-top: 4.5rem;
+      }
+
+      .mrgnrt {
+        margin-right: 8px;
+      }
+      .attext {
+        font-size: small;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+      }
+      .attext > span {
+        font-weight: bold;
+      }
+      .pntext {
+        font-size: small;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+      }
+      .pntext > span {
+        font-weight: bold;
+      }
+      #editPanel {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        height: 80%;
+        width: 70%;
+        transform: translate(-50%, -50%);
+        border-radius: 6px;
+        background-color: beige;
+        box-shadow: 0px 0px 34px 0px rgba(0, 0, 0, 0.75);
+        overflow-y: scroll;
+        padding: 10px;
+      }
+      #editPanel > textarea {
+        border-radius: 6px;
+        height: 200px;
+      }
+      #editQuesText {
+        font-family: 'Courier New', Courier, monospace;
+      }
+      .ntype {
+        display: inline;
+      }
+      .ntype > input {
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        margin: 8px;
+        width: 90px;
+      }
+      #optio > .optn {
+        padding: 7px;
+        border: 1px solid rgba(48, 48, 48, 0.247);
+        border-radius: 5px;
+      }
+      #optio > .optn > .optin {
+        margin-left: 0;
+      }
+      #optio > .optn > .optlb {
+        margin-left: 6px;
+      }
+      #optio > .optn > .optxt {
+        width: 58em;
+        margin-left: 6px;
+        margin-right: 6px;
+        border: none;
+        background-color: transparent;
+      }
+      #optio > .optn > .optxt:focus {
+        outline: none;
+      }
+      .inprop {
+        height: 30px;
+      }
+      .inprop:focus {
+        outline: none;
+      }
+      .panelaction {
+        float: right;
+      }
+      .delop {
+        border: none;
+        background-color: transparent;
+      }
+      .hider {
+        display: none;
+      }
+      .linesp {
+        display: inline;
+        width: 40%;
+      }
+      .formbox {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        height: 38px;
+        margin-right: 8px;
+      }
+      .formbtn {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        background-color: rgb(0, 102, 255);
+        color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        height: 38px;
+        margin-right: 8px;
+        float: left;
+      }
+      .dropbtn {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        background-color: rgb(255, 40, 40);
+        color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        height: 38px;
+        margin-right: 8px;
+        float: left;
+      }
+      form > label {
+        color: #888888;
+      }
+      #timebox {
+        width: 60px;
+      }
+      #countbox {
+        width: 60px;
+      }
+      .ccent {
+        padding-top: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        width: 1296px;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      #setbox {
+        float: left;
+        margin-right: 5px;
+      }
+      label[for="countbox"] {
+        margin-left: 28px;
+      }
+      #addCBX {
+        border: 0px;
+        color: white;
+        background-color: #3e4347;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+      #addMCQ {
+        border: 0px;
+        color: white;
+        background-color: #3e4347;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+      .hlink {
+        border: 0;
+        border-radius: 5px;
+        background-color: #3e4347;
+      }
+      .olink {
+        border: 0;
+        border-radius: 5px;
+        background-color: #813d3d;
+        margin-left: 10px;
+      }
+      #examlink {
+        font-family: monospace;
+        border: 0px;
+        border-radius: 5px;
+        background-color: #d3d3d3;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      .chronox {
+        border: 1px solid rgb(182, 182, 182);
+        border-radius: 4px;
+        display: inline-block;
+        height: 34px;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <span class="navbar-brand"><%= name %></span>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link active hlink" aria-current="page" href="/board">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active olink" aria-current="page" href="/logout">Logout</a>
+            </li>
+          </ul>
+          <button id="addCBX" onclick="addNewQues(true)">Add Checkbox</button>
+          <button id="addMCQ" onclick="addNewQues(false)">Add MCQ</button>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="ccent bg-light pt-5 pb-4 px-5 rounded my-4">
+      <div class="form-group">
+        <input
+          type="text"
+          id="namebox"
+          name="name"
+          class="formbox"
+          placeholder="Exam name"
+          value="<%= name %>"
+          required
+        />
+        <label for="timebox">Time (mins):</label>
+        <input
+          type="number"
+          id="timebox"
+          name="duration"
+          class="formbox"
+          placeholder="5"
+          min="5"
+          value="<%= duration %>"
+          required
+        />
+        <br><br>
+        <label for="setbox">Make sets</label>
+        <input
+          type="checkbox"
+          id="setbox"
+          name="setbased"
+          class="formbox"
+          <%= setBased ? 'checked' : '' %>
+          required
+        />
+        <label for="countbox">Question count per set</label>
+        <input
+          type="number"
+          id="countbox"
+          name="qcount"
+          class="formbox"
+          placeholder="5"
+          min="0"
+          value="<%= quesPerSet %>"
+          required
+        />
+        <br><br>
+        <p><b>Window Start:</b>&nbsp;<button id="startbox" class="chronox" onclick="pickButton(this)"><%= windowStart %></button></p>
+        <p><b>Window End:  </b>&nbsp;&nbsp;<button id="endbox" class="chronox" onclick="pickButton(this)"><%= windowEnd %></button></p>
+        <p id="examlink"><%= host %></p>
+        <button onclick="dropExam()" class="dropbtn">Delete Exam</button>
+        <button onclick="updateSetting()" class="formbtn">Update settings</button>
+      </div>
+    </div>
+
+    <main id="contlist" class="container">
+        <% for( let i = 0; i < quesPool.length; i++ ) { %>
+            <div
+                data-qtype="<%= quesPool[i].checkbox ? 'cbox' : 'mcq' %>"
+                data-qsid="<%= quesPool[i].id %>"
+                class="bg-light pt-5 pb-4 px-5 rounded my-4"
+            >
+                <p class="lead hdtext"><%= quesPool[i].text %></p>
+                <p class="attext text-muted">Attempts remaining: <span><%= quesPool[i].attempts < 0 ? Infinity : quesPool[i].attempts %></span></p>
+                <p class="pntext text-muted">Points: <span><%= quesPool[i].points %></span></p>
+                <% for( let j = 0; j < quesPool[i].options.length; j++ ) { %>
+                    <div class="form-check optq mx-2 my-2">
+                        <input
+                            class="form-check-input optin"
+                            type="<%= quesPool[i].checkbox ? 'checkbox' : 'radio' %>"
+                            name="q_<%= quesPool[i].id %>"
+                            <%= quesPool[i].options[j].correct ? 'checked' : '' %>
+                            disabled
+                        />
+                        <label class="form-check-label optlb"><%= quesPool[i].options[j].label %></label>
+                    </div>
+                <% } %>
+                <button type="button" onclick="editFly(this)" class="bsub btn btn-success mt-3 mrgnrt mb-3 d-inline">Edit</button>
+                <button type="button" onclick="deltFly(this)" class="bedt btn btn-danger mt-3 mrgnrt mb-3 d-inline">Delete</button>
+              </div>
+        <% } %>
+    </main>
+    <section id="editPanel" class="hider" data-firsttime="true" data-qsid="AFCB" data-cbox="true">
+      <textarea class="form-control" id="editQuesText"></textarea>
+      <div class="ntype">
+        <label for="att_input">Attempts:</label>
+        <input class="inprop" type="number" id="att_input" name="att_input" min="0">
+      </div>
+      <div class="ntype">
+        <label for="pnt_input">Points:</label>
+        <input class="inprop" type="number" id="pnt_input" name="pnt_input" min="1">
+      </div>
+      <button onclick="closeFly()"    type="button" id="pnl-close" class="btn btn-secondary mt-2 mb-2 mx-1 panelaction ntype btn-sm">Close</button>
+      <button onclick="saveFly()"     type="button" id="pnl-save"  class="btn btn-primary   mt-2 mb-2 mx-1 panelaction ntype btn-sm">Save</button>
+      <button onclick="addBlankOpt()" type="button" id="pnl-add"   class="btn btn-success   mt-2 mb-2 mx-1 panelaction ntype btn-sm">Add option</button>
+      <div id="optio">
+        <div class="form-check optn mx-2 my-2">
+          <input class="form-check-input optin" type="checkbox" name="cnc" />
+          <input class="optxt" type="text" placeholder="option here..." value="Option 1">
+          <button class="ntype delop" onclick="removeSelf(this)">❌</button>
+        </div>
+        <div class="form-check optn mx-2 my-2">
+          <input class="form-check-input optin" type="checkbox" name="cnc" />
+          <input class="optxt" type="text" placeholder="option here..." value="Option 2">
+          <button class="ntype delop" onclick="removeSelf(this)">❌</button>
+        </div>
+        <div class="form-check optn mx-2 my-2">
+          <input class="form-check-input optin" type="checkbox" name="cnc" />
+          <input class="optxt" type="text" placeholder="option here..." value="Option 3">
+          <button class="ntype delop" onclick="removeSelf(this)">❌</button>
+        </div>
+      </div>
+    </section>
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+    <script src="/static/js/simplepicker.js"></script>
+    <script src="/static/js/common.js"></script> 
+    <script>
+      const EXAM_ID    = '<%- id %>';
+      const EXAM_START = '<%- windowStart %>';
+      const EXAM_END   = '<%- windowEnd %>';
+    </script>
+  </body>
+</html>

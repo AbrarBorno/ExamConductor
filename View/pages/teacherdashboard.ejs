@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/simplepicker.css" />
+    <meta name="theme-color" content="#7952b3" />
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      html {
+        height: 100%;
+      }
+      body {
+        padding-top: 56px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .linesp {
+        display: inline;
+        width: 40%;
+      }
+      .formbox {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        height: 38px;
+        margin-right: 8px;
+      }
+      .formbtn {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        background-color: rgb(0, 102, 255);
+        color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        height: 38px;
+      }
+      form {
+        margin-bottom: 30px;
+      }
+      form > label {
+        color: #888888;
+      }
+      #timebox {
+        width: 60px;
+      }
+      .scrolldiv {
+        max-height: 287px;
+        overflow: auto;
+      }
+      td > a {
+        text-decoration: none;
+      }
+      .hlink {
+        border: 0;
+        border-radius: 5px;
+        background-color: #3e4347;
+      }
+      .olink {
+        border: 0;
+        border-radius: 5px;
+        background-color: #813d3d;
+        margin-left: 10px;
+      }
+      .chronox {
+        border: 1px solid rgb(182, 182, 182);
+        border-radius: 4px;
+        display: inline-block;
+        height: 34px;
+      }
+      .lessform {
+        margin-bottom: 10px;
+      }
+      .sense {
+        width: 100%;
+        background-color: rgb(230, 230, 230);
+        border-radius: 8px;
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+      }
+      .sense > p {
+          text-align: center;
+          font-size: 30px;
+          font-weight: bold;
+          font-family: "Verdana";
+          color: rgb(136, 136, 136);
+      }
+      #welcome {
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <span class="navbar-brand">Dashboard</span>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link active hlink" aria-current="page" href="/board">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active olink" aria-current="page" href="/logout">Logout</a>
+            </li>
+          </ul>
+          <span id="welcome">Welcome, <%= `${user.firstName} ${user.lastName}` %></span>
+        </div>
+      </div>
+    </nav>
+    <div>
+      <div class="form-inline lessform">
+        <input
+          type="text"
+          id="namebox"
+          name="name"
+          class="formbox"
+          placeholder="Exam name"
+          required
+        />
+        <label for="timebox">Time (mins):</label>
+        <input
+          type="number"
+          id="timebox"
+          name="duration"
+          class="formbox"
+          placeholder="5"
+          min="5"
+          required
+        />
+        <label for="startbox">Start:</label>
+        <button
+          id="startbox"
+          class="chronox"
+          onclick="pickButton(this)"
+        >4/20/2021, 5:56:18 PM</button>
+        <label for="endbox">End:</label>
+        <button
+          id="endbox"
+          class="chronox"
+          onclick="pickButton(this)"
+        >4/20/2021, 5:56:18 PM</button>
+        <button onclick="makeExam()" class="formbtn">Create Exam</button>
+      </div>
+    <% if (history.length > 0) { %>
+      <div class="table-wrapper-scroll-y my-custom-scrollbar scrolldiv">
+        <table class="table table-bordered table-striped mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Exam Name</th>
+              <th scope="col">Download Report (*.csv)</th>
+              <th scope="col">Edit Link</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% for( let i = 0; i < history.length; i++ ) { %>
+            <tr>
+              <td><%= history[i].name %></td>
+              <td><a href="/report?id=<%= history[i]._id %>">download</a></td>
+              <td><a href="/editxm?id=<%= history[i]._id %>" target="_blank">edit ➤</a></td>
+            </tr>
+          <% } %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <div class="sense">
+        <p>The exams you've created will appear here</p>
+      </div>
+    <% } %>
+    </div>
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+    <script src="/static/js/simplepicker.js"></script>
+    <script src="/static/js/common.js"></script>
+    <script>
+      const t1 = Date.now();
+      const t2 = t1 + (3 * 3600 * 1000);
+      document.getElementById('startbox').innerText = new Date(t1).toLocaleString();
+      document.getElementById('endbox').innerText   = new Date(t2).toLocaleString();
+    </script>
+  </body>
+</html>
