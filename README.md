@@ -15,4 +15,4 @@ Online Exam Conducting System in NodeJS
  - Get the link to the database. Starting with `mongodb://` or `mongodb+srv://`
  - Paste & replace the database link in app.js file in this line `const DBLINK = 'mongodb://localhost:27017/examine';`
  - Run `npm install` from terminal in the project root directory
- - Run `npm start` from terminal in the project root directory. The program will now launch. (You can also specify the port by changine the `const PORT` value)
+ - Run `npm start` from terminal in the project root directory. The program will now launch. (You can also specify the port by changing the `const PORT` value)
