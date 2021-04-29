@@ -1,4 +1,4 @@
-# ExamConductor
+# ExamConductor (Online Exam System)
 Online Exam Conducting System in NodeJS
 
 **Prerequisites:**
