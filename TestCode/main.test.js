@@ -31,3 +31,29 @@ describe("Unit Tests", () => {
 
     testObjects.forEach(obj => obj.runAll());
 });
+
+/*
+Private methods are not considered while unit testing.
+below listed are the private methods with their respective classes.
+I did not write test cases for these.
+
+UserModelOperation
+	- _mapFromModel()
+QuesModelOperation
+	- _mapFromModel()
+ExamModelOperation
+	- _makeFromModel()
+
+
+ExamControl
+	- mapToRender()
+ScriptControl
+	- determineState()
+	- processAnswerScript()
+	- mapQuesAns()
+	- evalQuesAns()
+	- evalSingle()
+	- mapToRender()
+	- calcObtained()
+	- calcScoreZip()
+*/
